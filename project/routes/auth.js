@@ -9,7 +9,7 @@ router.post("/Register", async (req, res, next) => {
     // valid parameters
     // username exists
     const users = await DButils.execQuery(
-      "SELECT username FROM dbo.users_tirgul"
+      "SELECT username FROM users"
     );
 
     if (users.find((x) => x.username === req.body.username))
@@ -23,10 +23,12 @@ router.post("/Register", async (req, res, next) => {
     req.body.password = hash_password;
 
     // add the new username
-    await DButils.execQuery(
-      `INSERT INTO dbo.users_tirgul (username, password) VALUES ('${req.body.username}', '${hash_password}')`
+    await DButils.execQuery( 
+      `INSERT INTO users (username, firstName, lastName, country, password, email, imageUrl)
+       VALUES ('${req.body.username}','${req.body.firstName}','${req.body.lastName}',
+       '${req.body.country}','${hash_password}','${req.body.email}','${req.body.imageUrl}')`
     );
-    res.status(201).send("user created");
+    res.status(201).send("User created");
   } catch (error) {
     next(error);
   }
@@ -36,7 +38,7 @@ router.post("/Login", async (req, res, next) => {
   try {
     const user = (
       await DButils.execQuery(
-        `SELECT * FROM dbo.users_tirgul WHERE username = '${req.body.username}'`
+        `SELECT * FROM users WHERE username = '${req.body.username}'`
       )
     )[0];
     // user = user[0];
@@ -51,7 +53,7 @@ router.post("/Login", async (req, res, next) => {
     req.session.user_id = user.user_id;
 
     // return cookie
-    res.status(200).send("login succeeded");
+    res.status(200).send("Login succeeded");
   } catch (error) {
     next(error);
   }
@@ -59,7 +61,7 @@ router.post("/Login", async (req, res, next) => {
 
 router.post("/Logout", function (req, res) {
   req.session.reset(); // reset the session info --> send cookie when  req.session == undefined!!
-  res.send({ success: true, message: "logout succeeded" });
+  res.send({ success: true, message: "Logout succeeded" });
 });
 
 module.exports = router;

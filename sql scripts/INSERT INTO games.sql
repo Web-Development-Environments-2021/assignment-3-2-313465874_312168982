@@ -1,0 +1,11 @@
+INSERT INTO games (referee_id,date_time,home_team,away_team,stadium,result)
+VALUES
+	(2,'2020-03-20 18:00:00','FC BARCELONA','AC ROME','CAMP NOU','2-0'),
+	(3,'2021-05-30 15:30:00','REAL MADRID FC','MANCHESTER CITY','ETHIHAD STADIUM','1-0'),
+	(4,'2022-08-18 14:00:00','MANCHESTER UNITED','SEVILLA FC','STAMFORD BRIDGE'),
+	(5,'2023-2-14 12:00:00','Celtic','MILAN AC','SANTIAGO BERNABEU'),
+	(4,'2023-03-20 18:00:00','Celtic','AC ROME','CAMP NOU');
+
+UPDATE games 
+SET result = '2-3'
+WHERE game_id = 2
