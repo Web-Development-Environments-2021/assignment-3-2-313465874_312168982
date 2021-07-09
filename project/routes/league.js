@@ -40,22 +40,26 @@ router.get("/search", async (req, res, next) => {
     else{
       if(res_players_search.data.data.length != 0){
         if(res_players_search.data.data.length == 1){
-          playersSearch = await (
-            players_utils.getPlayersInfo(res_players_search.data.data[0]["player_id"]));
+          // playersSearch = await (
+          //   players_utils.getPlayersInfo(res_players_search.data.data[0]["player_id"]));
+          playersSearch = players_utils.extractRelevantPlayerData(res_players_search.data.data);
         }
         else{
-          playersSearch = await Promise.all(res_players_search.data.data.map(
-            (player)=>players_utils.getPlayersInfo(player["player_id"])));
+          // playersSearch = await Promise.all(res_players_search.data.data.map(
+          //   (player)=>players_utils.getPlayersInfo(player["player_id"])));
+          playersSearch = players_utils.extractRelevantPlayerData(res_players_search.data.data);
         }
       }
       if(res_teams_search.data.data.length != 0){
         if(res_teams_search.data.data.length == 1){
-          teamsSearch = await (
-            teams_utils.getTeamInfo(res_teams_search.data.data[0]["id"]));
+          // teamsSearch = await (
+          //   teams_utils.getTeamInfo(res_teams_search.data.data[0]["id"]));
+          teamsSearch = teams_utils.extractRelevantTeamData(res_teams_search.data.data);
         }
         else{
-          teamsSearch = await Promise.all(res_teams_search.data.data.map(
-            (team)=>teams_utils.getTeamInfo(team["id"])));
+        //   teamsSearch = await Promise.all(res_teams_search.data.data.map(
+        //     (team)=>teams_utils.getTeamInfo(team["id"])));
+          teamsSearch = teams_utils.extractRelevantTeamData(res_teams_search.data.data);
         }
       }
       res.status(200).send({message: "succeed",data: playersSearch, teamsSearch})

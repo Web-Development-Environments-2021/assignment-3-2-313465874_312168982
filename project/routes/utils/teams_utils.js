@@ -13,15 +13,16 @@ async function getTeamInfo(team_id) {
       })
     )
     let team_info = await Promise.all(promises);
-    return extractRelevantTeamData(team_info);
+    return this.extractRelevantTeamData(team_info.data.data);
 }
   
-  function extractRelevantTeamData(team_info) {
+function extractRelevantTeamData(team_info) {
     return team_info.map((team_info) => {  
-    const { name, logo_path} = team_info.data.data;
+    const { id,name, logo_path} = team_info;
       return {
         name: name,
         logo: logo_path,
+        id: id
       };
     })
   }
@@ -63,4 +64,5 @@ async function getTeamInfo(team_id) {
 
   exports.getGamesInTeam = getGamesInTeam;
   exports.getTeamInfo = getTeamInfo;
+  exports.extractRelevantTeamData = extractRelevantTeamData;
   

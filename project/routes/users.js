@@ -68,8 +68,9 @@ router.get("/getFavoriteGames", async (req, res, next) => {
       let gameId = game_ids[x]["game_id"]; 
       favorite_games.push(await DButils.execQuery
       (`select * from games where game_id='${gameId}'`)); //extracting the games ids into array
-    res.status(200).send(favorite_games);
     }
+    res.status(200).send(favorite_games);
+    
   } catch (error) {
     next(error);
   }

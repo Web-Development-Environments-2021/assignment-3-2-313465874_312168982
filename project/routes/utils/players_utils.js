@@ -48,13 +48,14 @@ async function getPlayersInfo(players_ids_list) {
 
 function extractRelevantPlayerData(players_info) {
     return players_info.map((player_info) => {
-      const { fullname, image_path, position_id } = player_info.data.data;
-      const { name } = player_info.data.data.team.data;
+      const { fullname, image_path, position_id,player_id } = player_info;
+      const { name } = player_info.team.data;
       return {
         name: fullname,
         image: image_path,
         position: position_id,
         team_name: name,
+        player_id:player_id
       };
     });
 }
@@ -86,13 +87,16 @@ async function getPlayersFullInfo(players_ids_list) {
   }
   
   let players_info = await Promise.all(promises);
-  return extractFullPlayerData(players_info);
+  return this.extractFullPlayerData(players_info);
 }
 
 function extractFullPlayerData(players_info) {
   return players_info.map((player_info) => {
-    const { fullname, common_name, birthdate, countryBirth, weight, height, image_path, nationality, position_id } = player_info.data.data;
-    const { name } = player_info.data.data.team.data;
+    if(player_info.data.data){
+      player_info=player_info.data.data
+    }
+    const { fullname, common_name, birthdate, countryBirth, weight, height, image_path, nationality, position_id } = player_info;
+    const { name } = player_info.team.data;
     return {
       name: fullname,
       common_name: common_name,
@@ -118,3 +122,4 @@ exports.getPlayersByTeam = getPlayersByTeam;
 exports.getPlayersInfo = getPlayersInfo;
 exports.extractFullPlayerData = extractFullPlayerData;
 exports.getPlayersFullInfo = getPlayersFullInfo;
+exports.extractRelevantPlayerData = extractRelevantPlayerData;
