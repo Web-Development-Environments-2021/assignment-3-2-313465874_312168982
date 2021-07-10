@@ -43,6 +43,7 @@ async function getLeagueDetails() {
     current_season_name: league.data.data.season.data.name,
     // current_stage_name: stage.data.data.name,
     nextGame: nextGame,
+    // top3games: top3games,
   };
 }
 
@@ -60,7 +61,8 @@ async function getGamesDB() {
     let matchReportGame = await DButils.execQuery(
       `SELECT matchReport.minuteEvent,gameEvent.event 
       FROM matchReport JOIN gameEvent
-      ON matchReport.event = gameEvent.event_id AND matchReport.game_id = ${gameId}`
+      ON matchReport.event = gameEvent.event_id AND matchReport.game_id = ${gameId}
+      ORDER BY matchReport.minuteEvent ASC`
     );
     matchReportDict[gameId]=matchReportGame
     

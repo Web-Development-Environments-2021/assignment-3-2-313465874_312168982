@@ -34,10 +34,10 @@ async function getFavoriteGames(user_id) {
   return game_ids; 
 }
 
-async function addGameToDB(referee_id,date_time,home_team,away_team,stadium) {
+async function addGameToDB(referee_name,date_time,home_team,away_team,stadium) {
   await DButils.execQuery(
-    `insert into games (referee_id,date_time,home_team,away_team,stadium) 
-    values ('${referee_id}','${date_time}','${home_team}','${away_team}','${stadium}')`
+    `insert into games (referee_name,date_time,home_team,away_team,stadium) 
+    values ('${referee_name}','${date_time}','${home_team}','${away_team}','${stadium}')`
   );
 }
 

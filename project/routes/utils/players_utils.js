@@ -7,7 +7,7 @@ async function getPlayerIdsByTeam(team_id) {
   let player_ids_list = [];
   const team = await axios.get(`${api_domain}/teams/${team_id}`, {
     params: {
-      include: "squad",
+      include: "squad.player",
       api_token: process.env.api_token,
     },
   });

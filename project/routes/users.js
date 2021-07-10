@@ -80,7 +80,7 @@ router.get("/getFavoriteGames", async (req, res, next) => {
 router.use(async function (req, res, next) {
   DButils.execQuery("SELECT user_id FROM users")
     .then((users) => {
-      if (users.find((x) => x.user_id === req.session.user_id && req.session.user_id == 1)) {
+      if (users.find((x) => x.user_id === req.session.user_id && req.session.user_id == 6)) {
         req.user_id = req.session.user_id;
         next();
       }
@@ -94,13 +94,13 @@ router.use(async function (req, res, next) {
 //add game by representative of the association
 router.post("/addGame", async (req, res, next) => {
   try {
-    const referee_id = req.body.referee_id;
-    const data_time = req.body.data_time;
+    const referee_name = req.body.referee_name;
+    const date_time = req.body.date_time;
     const home_team = req.body.home_team;
     const away_team = req.body.away_team;
     const stadium = req.body.stadium;
   
-    await users_utils.addGameToDB(referee_id,data_time,home_team,away_team,stadium);
+    await users_utils.addGameToDB(referee_name,date_time,home_team,away_team,stadium);
     res.status(201).send("The game successfully added to DB");
   } catch (error) {
     next(error);
