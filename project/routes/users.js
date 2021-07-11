@@ -31,8 +31,13 @@ router.use(async function (req, res, next) {
  */
 router.post("/addFavoriteGame", async (req, res, next) => {
   try { 
-    const user_id = req.session.user_id;
-    const game_id = req.body.game_id;
+    const username = req.body.username;
+    let user_id = await DButils.execQuery(
+      `SELECT user_id FROM users where username = '${username}'`
+    );
+    // const user_id = req.session.user_id;
+    user_id = user_id[0].user_id;
+    const game_id = req.body.id;
     resultFav = await users_utils.checkIfGameFavorite(user_id, game_id);
     if(resultFav == -1){
       throw { status: 409, message: "You already like this game"};

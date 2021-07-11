@@ -26,7 +26,7 @@ router.get("/teamFullDetails/:teamId", async (req, res, next) => {
       req.params.teamId
     ));
     //we should keep implementing team page.....
-    let team_name = team_details[0][0]["team_name"];
+    let team_name = team_details[0][1]["team_name"];
     // let team_name = "Celtic"
     team_details.push(await teams_utils.getGamesInTeam(team_name))
     res.send(team_details);
