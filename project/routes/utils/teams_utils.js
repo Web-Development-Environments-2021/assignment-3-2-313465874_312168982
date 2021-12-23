@@ -34,7 +34,7 @@ function extractRelevantTeamData(team_info) {
       `SELECT * FROM games WHERE result is NULL AND home_team='${team_name}' OR away_team='${team_name}'`
     );
     let pastGames = await DButils.execQuery(
-      `SELECT * FROM games WHERE result is not NULL AND home_team='${team_name}' OR away_team='${team_name}'`
+      `SELECT * FROM games WHERE result is not NULL AND (home_team='${team_name}' OR away_team='${team_name}')`
     );
     let matchReportDict = {}
     for (let x = 0; x< pastGames.length;x++){
